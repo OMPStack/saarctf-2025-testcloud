@@ -1,0 +1,54 @@
+---
+- name: Install dependencies
+  package:
+    name:
+      - python3-requests
+      - python3-pwntools
+    state: present
+
+- name: Ensure checker user exists
+  ansible.builtin.user:
+    name: "{{ dummy_checker_user }}"
+    shell: /usr/sbin/nologin
+    create_home: true
+
+- name: Ensure checker install directory exists
+  ansible.builtin.file:
+    path: "{{ dummy_checker_install_dir }}"
+    state: directory
+    owner: "{{ dummy_checker_user }}"
+    group: "{{ dummy_checker_user }}"
+    mode: '0755'
+
+- name: Copy script to it
+  ansible.builtin.copy:
+    src: 'files/checker.py'
+    dest: '{{ dummy_checker_install_dir }}/'
+    owner: "{{ dummy_checker_user }}"
+    group: "{{ dummy_checker_user }}"
+
+- name: Configure systemd checker
+  template:
+    src: dummy_checker.service.j2
+    dest: /etc/systemd/system/dummy_checker.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Configure systemd timer
+  template:
+    src: dummy_checker.timer.j2
+    dest: /etc/systemd/system/dummy_checker.timer
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable and start dummy_checker
+  ansible.builtin.systemd:
+    name: dummy_checker.timer
+    enabled: true
+    state: started

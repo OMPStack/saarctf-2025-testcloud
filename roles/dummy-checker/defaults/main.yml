@@ -1,0 +1,4 @@
+dummy_checker_user: "dummy_checker"
+dummy_checker_install_dir: "/opt/{{ dummy_checker_user }}"
+
+checker_timeout_sec: 10

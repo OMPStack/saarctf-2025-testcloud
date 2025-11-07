@@ -1,0 +1,10 @@
+[Unit]
+Description=Run dummy_checker.service every {{ checker_timeout_sec }} seconds
+
+[Timer]
+OnUnitActiveSec={{ checker_timeout_sec }}s
+OnBootSec={{ checker_timeout_sec }}s
+Unit=dummy_checker.service
+
+[Install]
+WantedBy=timers.target

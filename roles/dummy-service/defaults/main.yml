@@ -1,0 +1,2 @@
+dummy_service_user: "dummy_service"
+dummy_service_install_dir: "/opt/{{ dummy_service_user }}"

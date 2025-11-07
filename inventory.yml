@@ -1,0 +1,8 @@
+---
+vulnboxes:
+  hosts:
+    orga-vulnbox: { ansible_host: "orga-vulnbox.oneman.party", ansible_user: root }
+
+gateways:
+  hosts:
+    orga-gateway: { ansible_host: "orga-gateway.oneman.party", ansible_user: root }

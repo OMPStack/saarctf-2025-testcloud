@@ -1,0 +1,18 @@
+---
+
+- name: "Configure Wireguard VPN"
+  hosts: all
+  tags:
+    - wireguard-setup
+  roles:
+    - githubixx.ansible-role-wireguard
+
+- hosts: vulnboxes
+  roles:
+    - dummy-service
+
+- hosts: gateways
+  roles:
+    - dummy-checker
+  vars:
+    dummy_checker_checked_ip: "{{ hostvars[groups['vulnboxes'][0]]['wireguard_addresses'][0] | ansible.utils.ipaddr('address') }}"

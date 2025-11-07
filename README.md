@@ -1,9 +1,9 @@
 # Saarctf Testsetup
 
-This repository is used to create a simplified version of the saarctf cloudhosted setup.
-When the game starts you will get ssh access to a vm and thats it.
-This repo sets up this VM together with a game gateway so you have something to test your scripts.
-The vulnbox contains a dummy service and the gateway will run exploit/checkker traffic.
+This repository is used to create a simplified version of the saarctf cloud-hosted setup.
+When the game starts, you will get ssh access to a vm and that's it.
+This repo sets up this VM together with a game gateway, so you have something to test your scripts.
+The vulnbox contains a dummy service and the gateway will run exploit/checker traffic against it.
 
 ## Requirements
 
@@ -36,5 +36,13 @@ tofu apply
 
 6. Provision the system using:
 ```bash
+ansible-galaxy install -r requirements.yml
 ansible-playbook setup.yml
+```
+
+## Monitoring
+
+See what the checker `/opt/dummy_checker/checker.py` is doing:
+```bash
+journalctl -f -u dummy_checker.service
 ```

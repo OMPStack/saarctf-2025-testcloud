@@ -1,0 +1,39 @@
+---
+- name: Ensure service user exists
+  ansible.builtin.user:
+    name: "{{ dummy_service_user }}"
+    shell: /usr/sbin/nologin
+    create_home: true
+
+- name: Ensure service install directory exists
+  ansible.builtin.file:
+    path: "{{ dummy_service_install_dir }}"
+    state: directory
+    owner: "{{ dummy_service_user }}"
+    group: "{{ dummy_service_user }}"
+    mode: '0755'
+
+- name: Copy script to it
+  ansible.builtin.copy:
+    src: 'files/service.py'
+    dest: '{{ dummy_service_install_dir }}/'
+    owner: "{{ dummy_service_user }}"
+    group: "{{ dummy_service_user }}"
+
+- name: Configure systemd service
+  template:
+    src: dummy_service.service.j2
+    dest: /etc/systemd/system/dummy_service.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable and start dummy_service
+  ansible.builtin.systemd:
+    name: dummy_service
+    enabled: true
+    state: restarted

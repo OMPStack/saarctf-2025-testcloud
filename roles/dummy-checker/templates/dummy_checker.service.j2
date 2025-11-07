@@ -1,0 +1,14 @@
+[Unit]
+Description=Dummy Checker for dummy service
+After=network.target
+
+[Service]
+Type=oneshot
+User={{ dummy_checker_user }}
+Group={{ dummy_checker_user }}
+WorkingDirectory={{ dummy_checker_install_dir }}
+ExecStart=/usr/bin/python3 checker.py {{ dummy_checker_checked_ip }}
+
+# Optional: limit permissions for safety
+StandardOutput=journal
+StandardError=journal

@@ -1,0 +1,6 @@
+wireguard_addresses:
+  - "10.32.62.254/15"
+  - "10.32.250.2/15"
+
+wireguard_endpoint: "{{ ansible_host }}"
+wireguard_persistent_keepalive: "25"

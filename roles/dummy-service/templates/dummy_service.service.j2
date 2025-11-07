@@ -1,0 +1,19 @@
+[Unit]
+Description=Dummy Python Service
+After=network.target
+
+[Service]
+Type=simple
+User={{ dummy_service_user }}
+Group={{ dummy_service_user }}
+WorkingDirectory={{ dummy_service_install_dir }}
+ExecStart=/usr/bin/python3 service.py
+Restart=on-failure
+RestartSec=5
+
+# Optional: limit permissions for safety
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
