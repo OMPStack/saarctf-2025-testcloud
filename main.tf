@@ -177,6 +177,7 @@ resource "cloudflare_dns_record" "gateway_dns_entry" {
   depends_on = [hcloud_primary_ip.gateway_ip]
 }
 
+/*
 resource "cloudflare_dns_record" "gateway_AAAA_dns_entry" {
   zone_id = local.domain_zone_id
   name    = var.gateway_hostname
@@ -186,6 +187,7 @@ resource "cloudflare_dns_record" "gateway_AAAA_dns_entry" {
   proxied = false
   depends_on = [hcloud_server.gamegateway]
 }
+*/
 
 # vulnbox
 variable "vulnbox_hostname" {
@@ -202,6 +204,7 @@ resource "cloudflare_dns_record" "vulnbox_dns_entry" {
   depends_on = [hcloud_primary_ip.vulnbox_ip]
 }
 
+/*
 resource "cloudflare_dns_record" "vulnbox_AAAA_dns_entry" {
   zone_id = local.domain_zone_id
   name    = var.vulnbox_hostname
@@ -211,3 +214,4 @@ resource "cloudflare_dns_record" "vulnbox_AAAA_dns_entry" {
   proxied = false
   depends_on = [hcloud_server.vulnbox]
 }
+*/
